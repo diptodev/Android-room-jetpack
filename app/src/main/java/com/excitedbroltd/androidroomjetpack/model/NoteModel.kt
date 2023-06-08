@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 class NoteModel(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
-    val date: Long,
+    val timeStamp: Long,
     val title: String,
     val desc: String
 )
