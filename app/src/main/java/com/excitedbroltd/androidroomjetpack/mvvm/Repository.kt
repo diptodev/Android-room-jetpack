@@ -1,10 +1,12 @@
 package com.excitedbroltd.androidroomjetpack.mvvm
 
+import androidx.compose.runtime.MutableState
+import androidx.lifecycle.LiveData
 import com.excitedbroltd.androidroomjetpack.database.NoteDao
 import com.excitedbroltd.androidroomjetpack.model.NoteModel
 
 class Repository(private val noteDao: NoteDao) {
-    suspend fun getAllNotes(): List<NoteModel> {
+       fun getAllNotes(): LiveData<List<NoteModel>> {
         return noteDao.getAllNotes()
     }
 

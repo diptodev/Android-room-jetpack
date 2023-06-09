@@ -14,32 +14,24 @@ import kotlinx.coroutines.launch
 class NoteViewModel(context: Context) : ViewModel() {
     private var userNote: NoteDatabase
     private lateinit var mnoteDao: NoteDao
-    private var repository: Repository? = null
+    private lateinit var repository: Repository
     private var allNotes: MutableState<List<NoteModel>> = mutableStateOf(listOf())
 
     init {
         userNote = NoteDatabase.getNoteDatabaseInstance(context)
         mnoteDao = userNote.noteDao()
-        if (repository != null) repository else Repository(mnoteDao)
+        repository = Repository(mnoteDao)
     }
 
     fun addNote(noteModel: NoteModel) {
         viewModelScope.launch {
-            repository?.let {
-                it.addNote(noteModel)
-            }
+            repository.addNote(noteModel)
         }
     }
 
-    fun getNotes(): MutableState<List<NoteModel>> {
-        viewModelScope.launch {
-            repository?.let {
-                allNotes.value = it.getAllNotes()
-            }
-
-        }
-        return allNotes
-    }
+    fun getNotes() = repository.getAllNotes()
 
 
 }
+
+
